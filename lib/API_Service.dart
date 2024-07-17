@@ -5,7 +5,7 @@ import 'package:todo/taskModel.dart';
 Future<List<taskModel>> getTaskAPI() async {
   List<taskModel> taskData = [];
   var url = Uri.parse(
-      "https://crudcrud.com/api/a48ec559e4b0444096cb502929285ef8/tasks/");
+      "https://crudcrud.com/api/c9f4dd0103a047429393abecd6fa906c/tasks/");
   var response = await http.get(url);
   var responseBody = jsonDecode(response.body);
 
@@ -15,9 +15,9 @@ Future<List<taskModel>> getTaskAPI() async {
   return taskData;
 }
 
-Future<void> postTaskAPI(String task, String priority, String Reward) async {
+Future postTaskAPI(String task, String priority, String Reward) async {
   var url = Uri.parse(
-      "https://crudcrud.com/api/a48ec559e4b0444096cb502929285ef8/tasks/");
+      "https://crudcrud.com/api/c9f4dd0103a047429393abecd6fa906c/tasks/");
   var response = await http.post(
     url,
     headers: {'Content-Type': 'application/json'},
@@ -31,10 +31,11 @@ Future<void> postTaskAPI(String task, String priority, String Reward) async {
   }
 }
 
-Future<void> UpdateTaskAPI(
-    String task, String priority, String Reward, String id) async {
+
+Future UpdateTaskAPI(
+    String id, String task, String priority, String Reward) async {
   var url = Uri.parse(
-      "https://crudcrud.com/api/a48ec559e4b0444096cb502929285ef8/tasks/$id");
+      "https://crudcrud.com/api/c9f4dd0103a047429393abecd6fa906c/tasks/$id");
   var response = await http.put(
     url,
     headers: {'Content-Type': 'application/json'},
@@ -52,5 +53,20 @@ Future<void> UpdateTaskAPI(
     print("Task updated successfully");
   } else {
     print("Failed to update task");
+    // Optionally print response error details
+    print("Error details: ${response.body}");
+  }
+}
+
+deleteTaskAPI(String id) async{
+  var url = Uri.parse(
+      "https://crudcrud.com/api/c9f4dd0103a047429393abecd6fa906c/tasks/$id");
+  var response = await http.delete(url);
+  if (response.statusCode == 200) {
+    print("Task deleted successfully");
+  } else {
+    print("Failed to delete task");
+    // Optionally print response error details
+    print("Error details: ${response.body}");
   }
 }
